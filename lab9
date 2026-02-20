@@ -1,0 +1,71 @@
+#include <iostream>
+#include <string>
+#include <locale>
+#include <fcntl.h>
+#include <io.h>
+using namespace std;
+int main()
+{
+	_setmode(_fileno(stdout), _O_U16TEXT);
+	_setmode(_fileno(stdin), _O_U16TEXT);
+	setlocale(LC_ALL, "Russian");
+	wstring faculty;
+	int groupQuantity;
+	int avgOfPercentesFaculty[5];
+
+	wcout << L"Наименование факультета: "; wcin >> faculty;
+	wcout << L"Число групп: "; wcin >> groupQuantity;
+
+	wstring* arrayOfGroups = new wstring[groupQuantity];
+	int** arrayOfPercentes = new int* [groupQuantity];
+	for (int i = 0; i < groupQuantity; i++) {
+		arrayOfPercentes[i] = new int[4];
+	}
+	wcout << L"Введите группы: ";
+	for (int i = 0; i < groupQuantity; i++) {
+		wcin >> arrayOfGroups[i];
+	}
+	wcout << L"\nВведите процент оценок каждой группы: \n";
+	wcout << L"Группа  %5 %4 %3 %2\n";
+	for (int i = 0; i < groupQuantity; i++) {
+		wcout << arrayOfGroups[i] << "\t";
+		int avgOfGroup = 0;
+		// ввод процента оценок в группе
+		for (int k = 0; k < 4; k++) {
+			wcin >> arrayOfPercentes[i][k];
+		}
+		// подсчет средней успеваемости в группе
+		for (int j = 0; j < 3; j++) {
+			avgOfGroup += arrayOfPercentes[i][j];
+		}
+		arrayOfPercentes[i][4] = avgOfGroup;
+	};
+
+	// средний по факультету
+	for (int i = 0; i < 5; i++) {
+		int tempAvg = 0;
+		// средняя оценка по факультету
+		for (int k = 0; k < groupQuantity; k++) {
+			tempAvg += arrayOfPercentes[k][i];
+		}
+		// средняя успеваемость по факультету
+		avgOfPercentesFaculty[i] = tempAvg / groupQuantity;
+	}
+
+	// итог
+	wcout << L"Успеваемость по группам факультета " << faculty << "\n";
+	wcout << L"Группа\t% пятерок\t% четверок\t% троек\
+		% двоек\t\t% успеваемости по группе\n";
+	for (int i = 0; i < groupQuantity; i++) {
+		wcout << arrayOfGroups[i] << "\t";
+		for (int k = 0; k < 5; k++) {
+			wcout << arrayOfPercentes[i][k] << "\t\t";
+		};
+		wcout << "\n";
+	};
+	wcout << L"Средний % по факультету: \n\t";
+	for (int k = 0; k < 5; k++) {
+		wcout << avgOfPercentesFaculty[k] << "\t\t";
+	}
+}
+
