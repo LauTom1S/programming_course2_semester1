@@ -1,0 +1,83 @@
+#include <iostream>
+#include <locale>
+#include <cstdlib>
+using namespace std;
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+    while (true) {
+        int task;
+        std::cout << "Введите задание для проверки лабораторной работы №2:\n\
+        1. Площадь квадрата\n\
+        2. Объем прямоугольного параллелепипеда\n\
+        3. Подсчет пройденного расстояния\n\
+        0. Выход из программы\n";
+        std::cin >> task;
+        switch (task) {
+        case 0: 
+            std::cout << "\nВыполнен выход из программы. Нажмите любую клавишу для продолжения...";
+            cin.ignore();
+            cin.get();
+            return 0;
+        case 1:
+            system("cls");
+            int a1;
+            do {
+                std::cout << "Введите сторону квадрата: ";
+                std::cin >> a1;
+                if (a1 <= 0) {
+                    std::cout << "Сторона не должна быть меньше или равна 0\n\n";
+                }
+                else {
+                    std::cout << "Площадь квадрата равна: " << a1*a1 << "\n\n";
+                    break;
+                };
+            } while (a1 <= 0);
+            break;
+        case 2:
+            system("cls");
+            int a2,b2,h2;
+            do {
+                std::cout << "Введите сторону a: ";
+                std::cin >> a2;
+                if (a2 <= 0) { std::cout << "Сторона не должна быть меньше или равна 0\n";}
+            } while (a2 <= 0);
+            do {
+                std::cout << "Введите сторону b: ";
+                std::cin >> b2;
+                if (b2 <= 0) { std::cout << "Сторона не должна быть меньше или равна 0\n"; }
+            } while (b2 <= 0);
+            do {
+                std::cout << "Введите сторону h: ";
+                std::cin >> h2;
+                if (h2 <= 0) { std::cout << "Сторона не должна быть меньше или равна 0\n"; }
+            } while (h2 <= 0);
+            std::cout << "Объем прямоугольного параллелепипеда равен: " << a2 * b2 * h2 << "\n\n";
+                break;
+        case 3:
+            system("cls");
+            int V, t;
+            std::cout << "Введите скорость (в км/час): ";
+            std::cin >> V;
+            do {
+                std::cout << "Введите время (в час): ";
+                std::cin >> t;
+                if (t <= 0) { std::cout << "Время не может быть меньше или равно 0\n"; };
+            } while (t <= 0);
+            if (V > 0) {
+                std::cout << "Пройдено " << V * t << " км\n\n";
+            } else if (V==0) {
+                std::cout << "Пройдено 0 км\n\n";
+            }
+            else if (V < 0) {
+                std::cout << "Пройдено " << (V-2*V) * t << " км в обратном направлении\n\n";
+            }
+            break;
+        default:
+            system("cls");
+            std::cout << "Введен неверный номер задания\n\n";
+            break;
+        }
+    }
+    
+}
