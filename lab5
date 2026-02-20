@@ -1,0 +1,107 @@
+#include <iostream>
+#include <cstdlib>
+
+#include <fstream>
+#include <string> 
+
+using namespace std;
+int main()
+{
+    //int* sentence_punct = new int[100];
+    setlocale(LC_ALL, "Russian");
+    while (true) {
+        // task 1
+        const string vowelsLower = "eyuioa";
+        const string vowelsUpper = "EYUIOA";
+        char current_ln;
+        bool nextWordIsNew = true;
+        fstream text_task1;
+        text_task1.open("C:/Users/w3nt1/Desktop/labs/lab6/x64/Debug/task1.txt");
+
+
+
+        // task2
+        fstream text_task2;
+        const string punct = ".,?!;)(";
+        int punct_count = 0;
+        string sentences_array[100];
+        int sentence_punct[100];
+        string current_sentence;
+        int k = 0;
+        int max_count_punct = 0;
+        text_task2.open("C:/Users/w3nt1/Desktop/labs/lab6/x64/Debug/task2.txt");
+        if (text_task2)
+        {
+            while (text_task2.get(current_ln))
+            {
+                current_sentence += current_ln;
+                size_t pos = punct.find(current_ln);
+                
+                if (pos != string::npos) {
+                    if (pos == 0) {
+                        sentences_array[k] = current_sentence;
+                        sentence_punct[k] = (punct_count + 1);
+                        punct_count = 0;
+                        k += 1;
+                        current_sentence = ' ';
+                    }
+                    else {
+                        punct_count += 1;
+                    }
+                }
+            }
+        }
+
+
+        int task;
+        cout << "Введите задание для проверки лабораторной работы №6:\n\
+        1. Считать английский текст из файла и выводит его на экран,\n\
+            заменив каждую первую букву слов, начинающихся с гласной\n\
+            буквы на прописную\n\
+        2. Написать программу, которая считывает текст из файла\n\
+            и выводит на экран предложения, содержащие максимальное\n\
+            количество знаков пунктуации.\n\
+            \n\
+        0. Выход из программы\n";
+        cin >> task;
+        switch (task) {
+        case 0:
+            cout << "\nВыполнен выход из программы. Нажмите любую клавишу для продолжения...";
+            cin.ignore();
+            cin.get();
+            return 0;
+        case 1:
+            system("cls");
+            if (text_task1)
+            {
+                while (text_task1.get(current_ln))
+                {
+                    if (nextWordIsNew == true) {
+                        size_t pos = vowelsUpper.find(current_ln);
+                        if (pos != string::npos) { cout << vowelsLower[pos]; }
+                        else { cout << current_ln; }
+                    }
+                    else { cout << current_ln; }
+                    if (current_ln == ' ') { nextWordIsNew = true; }
+                    else { nextWordIsNew = false; }
+                }
+            }
+            else { cout << "not opened"; }
+            text_task1.close();
+            cout << "\n\n";
+            break;
+        case 2:
+            system("cls");
+            int max_punct_sentence;
+            for (int i = 0; i < 100; i++) {
+                if (sentence_punct[i] > max_count_punct) {
+                    max_count_punct = sentence_punct[i];
+                    max_punct_sentence = i;
+                }
+            }
+            cout << max_count_punct << ": " << sentences_array[max_punct_sentence];
+            cout << "\n\n";
+            break;
+        }
+    }
+}
