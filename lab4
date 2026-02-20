@@ -1,0 +1,116 @@
+
+#include <iostream>
+using namespace std;
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+    while (true) {
+        int task;
+        int const X1 = 5; // размер первого массива
+        int const X2 = 6; // размер второго массива
+        int k, i, j, matrix5x5[X1][X1], answer, stroke; // case 1
+        int matrix6x6[X2][X2], column, newarray[X2][X2], ind; // case 2
+        const int m = 7; 
+        const int n = 7;
+        int matrixMxN[m][n], tempM, tempN; // case 3
+        int average[1][n];
+        std::cout << "Введите задание для проверки лабораторной работы №4:\n\
+        1. Произведение элементов побочной диагонали\n\
+           матрицы 5-го порядка\n\
+        2. Поменять местами пары строк матриц 6-го порядка\n\
+        3. Сформировать одномерный массив из средних\n\
+           арифметических элементов строк матрицы\n\
+           размера m*n\n\
+        0. Выход из программы\n";
+        std::cin >> task;
+        switch (task) {
+        case 0:
+            std::cout << "\nВыполнен выход из программы. Нажмите любую клавишу для продолжения...";
+            cin.ignore();
+            cin.get();
+            return 0;
+        case 1:
+            system("cls");
+            answer = 1; k = 1;
+            column = X1-1;
+            // создание матрицы
+            std::cout << "Матрица "<< X1 << "x" << X1 << ": \n";
+            for (i = 0; i < X1; i++) {
+                for (j = 0; j < X1; j++) {
+                    matrix5x5[i][j] = k;
+                    k++;
+                    std::cout << matrix5x5[i][j] << "\t";
+                }
+                std::cout << "\n";
+            }
+            // выполнение задания
+            for (stroke = 0; stroke < X1; stroke++) {
+                answer = answer * matrix5x5[stroke][column];
+                column--;
+            }
+            std::cout << "\n\nРезультат: " << answer << "\n\n";
+            break;
+        case 2:
+            system("cls");
+            k = 1;
+            // создание матрицы
+            std::cout << "Матрица " << X2 << "x" << X2 << ": \n";
+            for (i = 0; i < X2; i++) {
+                for (j = 0; j < X2; j++) {
+                    matrix6x6[i][j] = k;
+                    k++;
+                    std::cout << matrix6x6[i][j] << "\t";
+                }
+                std::cout << "\n";
+            }
+            // выполнение задания
+            ind = X2-1; // отступ
+            for (i = 0; i < X2; i++) {
+                for (j = 0; j < X2; j++) {
+                    newarray[i][j] = matrix6x6[i + ind][j];
+                }
+                ind -= 2;
+            }
+            // вывод новой матрицы
+            std::cout << "\n\nНовая матрица " << X2 << "x" << X2 << ": \n";
+            for (i = 0; i < X2; i++) {
+                for (j = 0; j < X2; j++) {
+                    std::cout << newarray[i][j] << "\t";
+                }
+                std::cout << "\n";
+            }
+            std::cout << "\n\n";
+            break;
+        case 3:
+            system("cls");
+            k = 1;
+            std::cout << "Матрица " << m << "x" << n << ": \n";
+            for (i = 0; i < m; i++) {
+                for (j = 0; j < n; j++) {
+                    matrixMxN[i][j] = k;
+                    k++;
+                    std::cout << matrixMxN[i][j] << "\t";
+                }
+                std::cout << "\n";
+            }
+            for (i = 0; i < m; i++) {
+                k = 0;
+                for (j = 0; j < n; j++) {
+                    k += matrixMxN[i][j];
+                }
+                average[0][i] = k / n;
+            }
+
+            std::cout << "\nМассив средних арифметических: \n";
+            for (i = 0; i < m; i++) {
+                    std::cout << average[0][i] << "\t";
+            }
+            std::cout << "\n\n";
+            break;
+        default:
+            system("cls");
+            std::cout << "Введен неверный номер задания\n\n";
+            break;
+        }
+    }
+}
