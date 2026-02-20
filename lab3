@@ -1,0 +1,103 @@
+#include <iostream>
+#include <locale>
+#include <cstdlib>
+using namespace std;
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+    const int n = 10;
+    const int array[n]{ 6,2,12,8,3,11,9,5,4,3 };
+    // const int array[n]{ 1,2,3,4,5,6,7,8,9,10 };
+    int sum = 0;
+    int case4count;
+    int total_summ = 0;
+    while (true) {
+        int task;
+        std::cout << "Введите задание для проверки лабораторной работы №3:\n\
+        1. Определение числа\n\
+        2. Сумма элементов массива\n\
+        3. Распределение человека в комманду\n\
+        4. Сумма элементов массива (пока меньше 32)\n\
+        0. Выход из программы\n";
+        std::cin >> task;
+        switch (task) {
+        case 0:
+            std::cout << "\nВыполнен выход из программы. Нажмите любую клавишу для продолжения...";
+            cin.ignore();
+            cin.get();
+            return 0;
+        case 1:
+            system("cls");
+            int a1;
+            std::cout << "Введите число: ";
+            std::cin >> a1;
+            if (a1 > 0) {std::cout << "\nЧисло " << a1 << " положительное\n\n";}
+            else if (a1 < 0) {std::cout << "\nЧисло " << a1 << " отрицательное\n\n";}
+            else {std::cout << "\nЧисло " << a1 << " равно нулю\n\n";};
+            break;
+        case 2:
+            system("cls");
+            std::cout << "Массив для примера: [";
+            for (int p = 0; p < n; p++) {
+                if (p+1 != n) {
+                    std::cout << array[p] << ", ";
+                } else {
+                    std::cout << array[p] << "]";
+                }
+            }
+            std::cout << "\n\n";
+            for (int i = 0; i < n; i++) {
+                total_summ += array[i];
+            };
+            std::cout << "Сумма элементов массива равна " << total_summ << "\n\n";
+            total_summ = 0;
+            break;
+        case 3:
+            system("cls");
+            bool success;
+            int human_class;
+            int team;
+            do {
+                std::cout << "Введите класс: ";
+                std::cin >> human_class;
+                team = human_class;
+                switch (team) {
+                    case 1: success = true; std::cout << "\nВы были распределены в " << "ЗЕЛЁНУЮ " << "команду\n\n"; break;
+                    case 2: success = true; std::cout << "\nВы были распределены в " << "КРАСНУЮ " << "команду\n\n"; break;
+                    case 3: success = true; std::cout << "\nВы были распределены в " << "СИНЮЮ " << "команду\n\n"; break;
+                    case 4: success = true; std::cout << "\nВы были распределены в " << "ЖЁЛТУЮ " << "команду\n\n"; break;
+                    default:
+                        success = false; std::cout << "Введен неверный класс\n\n"; break;
+                    }
+            } while (success != true);
+        break;
+        case 4:
+            system("cls");
+            total_summ = 0;
+            std::cout << "Массив для примера: [";
+            for (int p = 0; p < n; p++) {
+                if (p + 1 != n) {std::cout << array[p] << ", ";}
+                else {std::cout << array[p] << "]";}
+            }
+            std::cout << "\n\n";
+            case4count = 0;
+            do {
+                std::cout << "\n+" << array[case4count] << "\t";
+                total_summ += array[case4count];
+                std::cout << "Сумма: " << total_summ;
+                if (total_summ + array[case4count + 1] >= 32) {
+                    break;
+                }
+                case4count++;
+            } while (total_summ < 32 and case4count != n);
+            std::cout << "\nПрограмма закончила работу. Сумма элементов массива равна " << total_summ << "\n\n";
+            total_summ = 0;
+            break;
+        default:
+            system("cls");
+            std::cout << "Введен неверный номер задания\n\n";
+            break;
+        }
+    }
+
+}
