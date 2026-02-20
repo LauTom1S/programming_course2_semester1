@@ -1,0 +1,56 @@
+import numpy as np
+print('Введите номер подзадания: ')
+input(task)
+match task:
+    case '1':
+        months = ['Январь','Февраль','Март','Апрель',
+                  'Май','Июнь','Июль','Август',
+                  'Сентябрь','Октябрь','Ноябрь','Декабрь']
+        while True:
+            print('Введите дату в формате ММ/ДД/ГГ: ')
+            dateBefore = str(input()).spit('/')
+            month = int(dateBefor[0])
+            day = int(dateBefore[1])
+            year = dateBefore[2]
+            if (0 < day < 32) & (0 < month < 13):
+                print(str(month[(month-1)]) + ' ' + (('0' + str(day)) if day < 10 else str(day))
+                      + ', 20' + year)
+            else:
+                print('Неверный формат даты!')
+    case '2':
+        print('Наименование факультета: ', end=" ")
+        faculty = input()
+        print('Число групп: ', end=" ")
+        groupQuantity = int(input())
+        print('Введите группы (через пробел): ', end=" ")
+        groups = input().split(' ')
+        arrPercentes = np.zeros((groupQuantity, 5))
+        precentFacility = [0]*5
+        j = 0
+        print('Введите процент оценок (через пробел): ')
+        print('Группа\t%5 %4 %3 %2')
+        for i in range(0,groupQuantity):
+            print(groups[i] + '\t', end="")
+            percentes = input().split(' ')
+            for k in range(0,4):
+                arrPercentes[i][k] = int(percentes[k])
+        for i in range(0,4):
+            tempPercentCurrentGroup = 0
+            for k in range(0,3):
+                tempPercentCurrentGroup += int(arrPercentes[i][k])
+            arrPercentes[i][4] = int(tempPercentCurrentGroup)
+        for k in range(0,5):
+            tempPercentFacility = 0
+            for i in range(0,groupQuantity):
+                tempPercentFacility += int(arrPercentes[i][k])
+            precentFacility[k] = int(tempPercentFacility / groupQuantity)
+        print('\n\nУспеваемость по группа факультета ' + str(faculty))
+        print('Группа\t% пятерок\t% четверок\t% троек\t\t% двоек\t\t% успеваемости по группе')
+        for i in range(0,groupQuantity):
+            print(groups[i] + '\t', end="")
+            for k in range(0,5):
+                print(str(int(arrPercentes[i][k])), end="\t\t")
+            print('\n')
+        print('Средний % по факультету\n\t', end="")
+        for i in range(0,5):
+            print(str(precentFacility[i]), end="\t\t")
