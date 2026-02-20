@@ -1,0 +1,72 @@
+#include <iostream>
+#include <string>
+using namespace std;
+struct routeMARSH {
+    int routeNumber;
+    string routeStart;
+    string routeEnd;
+};
+
+
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+    int choise;
+    int lastInputNumber;
+    int tempNumberToFind;
+
+    routeMARSH mas[8];
+    while (true) {
+        //system("cls");
+        cout << "Доступные варианты действий:\n1. Заполнить массив данными\n2. Найти маршрут по номеру\n";
+        cout << "\nВведите номер действия: ";
+        cin >> choise;
+        switch (choise) {
+        case 1: {
+            system("cls");
+            for (int i = 0; i < 8; i++) {
+                while (true) {
+                    cout << "\nВведите номер маршрута: ";
+                    cin >> mas[i].routeNumber;
+                    cout << "Начало маршрута: ";
+                    std::cin.ignore();
+                    getline(cin, mas[i].routeStart);
+                    cout << "Конец маршрута: ";
+                    getline(cin, mas[i].routeEnd);
+                    break;
+                }
+            }
+            break;
+        }
+        case 2: {
+            system("cls");
+                while (true) {
+                    cout << "\nВведите номер маршрута для поиска: ";
+                    cin >> tempNumberToFind;
+                    bool found = false;
+                    for (int i = 0; i < 8; i++) {
+                        if (mas[i].routeNumber == tempNumberToFind) {
+                            found = true;
+                            cout << "\nМаршрут №" << mas[i].routeNumber << ": \\
+                                " << mas[i].routeStart << " - " << mas[i].routeEnd << "\n";
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        cout << "Маршрут не существует!";
+                    }
+                }
+            break;
+        }
+        case 3: {
+            for (int i = 0; i < 8; i++) {
+                cout << "\nМаршрут №" << mas[i].routeNumber << ": " << mas[i].routeStart << " - " << mas[i].routeEnd << "\n";
+            } break;
+        }
+        case 4: {
+            cout << "\n\n\n" << mas[0].routeNumber << mas[0].routeStart << mas[0].routeEnd;
+        }
+
+        }
+    }
+}
