@@ -1,0 +1,134 @@
+#include <iostream>
+using namespace std;
+
+// ф-ции задания №1
+void sort(int arr[], int size) {
+	for (int i = 0; i < size; i++) {
+		for (int k = 0; k < size - 1; k++) {
+			if (arr[k] > arr[k + 1]) {
+				int temp = arr[k];
+				arr[k] = arr[k + 1];
+				arr[k + 1] = temp;
+			}
+		}
+	}
+}
+
+int summNegativeElements(int arr[], int size) {
+	int sum = 0;
+	for (int i = 0; i < size; i++) {
+		if (arr[i] < 0) {
+			sum += arr[i];
+		}
+	}
+	return sum;
+}
+
+int summBetweenZeros(int arr[], int size) {
+	int first = -1;
+	int last = -1;
+	int sum = 0;
+	for (int i = 0; i < size; i++) {
+		if (arr[i] == 0) {
+			first = i;
+			break;
+		}
+	}
+	for (int i = size - 1; i != 0; i--) {
+		if (arr[i] == 0) {
+			last = i;
+			break;
+		}
+	}
+	for (int i = first; i < last; i++) {
+		sum += arr[i];
+	}
+	return sum;
+}
+
+// ф-ции задания №2
+
+int func1(int**matrix, int size) {
+	int totalSumm = 0;
+	bool columnHasNegative = false;
+	for (int c = 0; c < size; c++) {
+		columnHasNegative = false;
+		int colSumm = 0;
+		for (int r = 0; r < size; r++) {
+			colSumm += matrix[c][r];
+			if (matrix[c][r] < 0) {
+				columnHasNegative = true;
+			}
+		}
+		if (columnHasNegative == false) {
+			totalSumm += colSumm;
+		} 
+	}
+	return totalSumm;
+}
+
+int func2(int** matrix, int n) {
+	cout << "\n\n";
+	int minSum = 9999999;
+	for (int d = 0; d < n; d++) {
+		int sum = 0;
+		for (int i = 0; i <= d; i++) {
+			int j = d - i;
+			sum += abs(matrix[i][j]);
+		}
+		if (sum < minSum) {
+			minSum = sum;
+		}
+	}
+	return minSum;
+}
+
+int main() {
+	// задание 1
+	setlocale(LC_ALL, "Russian");
+	int arr[11] = { 5,0,-6,10,-11,8,7,0,21,4,-14 };
+	cout << "Сумма отр. чисел: " << summNegativeElements(arr, size(arr)) << endl;
+	cout << "Сумма чисел между 0: " << summBetweenZeros(arr, size(arr)) << endl;
+	sort(arr, size(arr));
+	cout << "Отсортированный массив [";
+	for (int i = 0; i < size(arr); i++) {
+		if (i == size(arr) -1) {
+			cout << arr[i] << "]\n";
+		} else { cout << arr[i] << ' '; }
+	}
+
+	// задание 2
+	int n;
+	cout << "\nВведите размер квадратной матрицы: ";
+	cin >> n;
+	int** matrix = new int* [n];
+	for (int i = 0; i < n; i++) {
+		matrix[i] = new int[n];
+	}
+	bool inputing = true;
+	int typedElements = 0;
+	int inputingRow = 1;
+
+	cout << "Введите элементы: \n";
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			cin >> matrix[i][j];
+			typedElements += 1;
+		}
+		inputingRow += 1;
+	}
+	//for (int i = 0; i < n; i++) {
+	//	for (int j = 0; j < n; j++) {
+	//		cout << matrix[i][j] << '\t';
+	//	}
+	//	cout << "\n";
+	//}
+	cout << "\n";
+	cout << "Сумма столбцов без отр. чисел: " << func1(matrix, n);
+	cout << "Минимум среди сумм модулей элементов диагоналей, параллельных побочной диагонали матрицы: " << func2(matrix, n);
+}
+
+
+	
+
+
